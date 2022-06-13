@@ -1,6 +1,6 @@
-from collections import namedtuple
 import struct
-
+from collections import namedtuple
+from pathlib import Path
 
 FIELDS = [
     (None, "="),                # "Native" endian.
@@ -33,3 +33,6 @@ def read_cartridge_metadata(buffer, offset: int=0x100):
     """
     data = struct.unpack_from(CARTRIDGE_HEADER, buffer, offset=offset)
     return CartridgeMetadata._make(data)
+
+p = Path('examples/snake.gb')
+print(read_cartridge_metadata(p.read_bytes()))
