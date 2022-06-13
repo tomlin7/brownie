@@ -48,23 +48,25 @@ class Instruction:
             operands=operands, cycles=self.cycles, bytes=self.bytes,
             mnemonic=self.mnemonic, comment=self.comment)
 
-instructions = []
+instructions = [[], []]
 with open('brownie/etc/opcodes.json') as f:
     opcodes = json.load(f)
-    for opcode, details in opcodes['unprefixed'].items():
-        details.pop('flags', None)
+    
+    for i, kind in enumerate(opcodes.values()):
+        for opcode, details in kind.items():
+            details.pop('flags', None)
 
-        operands = []
-        for op in details['operands']:
-            if incr := op.pop('increment', False):
-                op['adjust'] = '+' if incr else '-'
-            if decr := op.pop('decrement', False):
-                op['adjust'] = '-' if decr else '+'
-            operands.append(Operand(**op))
-        details['operands'] = operands
-        
-        instruction = Instruction(int(opcode, base=16), **details)
-        instructions.append(instruction)
+            operands = []
+            for op in details['operands']:
+                if incr := op.pop('increment', False):
+                    op['adjust'] = '+' if incr else '-'
+                if decr := op.pop('decrement', False):
+                    op['adjust'] = '-' if decr else '+'
+                operands.append(Operand(**op))
+            details['operands'] = operands
+            
+            instruction = Instruction(int(opcode, base=16), **details)
+            instructions[i].append(instruction)
 
-print(instructions[0xFF])
+print(instructions[1][0xFF])
 
