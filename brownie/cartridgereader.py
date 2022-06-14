@@ -34,5 +34,6 @@ def read_cartridge_metadata(buffer, offset: int=0x100):
     data = struct.unpack_from(CARTRIDGE_HEADER, buffer, offset=offset)
     return CartridgeMetadata._make(data)
 
-p = Path('examples/snake.gb')
-print(read_cartridge_metadata(p.read_bytes()))
+if __name__ == "__main__":
+    p = Path('examples/snake.gb')
+    print(read_cartridge_metadata(p.read_bytes()))

@@ -1,7 +1,7 @@
-from brownie.decoder import Decoder
-from brownie.opcodes import Instruction, Operand
-import pytest
 from pathlib import Path
+
+import pytest
+from brownie import Decoder, Instruction, Operand
 
 
 @pytest.fixture

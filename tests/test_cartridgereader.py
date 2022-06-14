@@ -1,7 +1,7 @@
 import sys
 import hypothesis.strategies as st
 from hypothesis import given
-from brownie.cartridgereader import read_cartridge_metadata
+from brownie import read_cartridge_metadata
 
 
 HEADER_START = 0x100

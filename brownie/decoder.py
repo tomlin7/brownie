@@ -1,6 +1,7 @@
+import sys
 from dataclasses import dataclass
 from pathlib import Path
-import sys
+
 from .opcodes import load_opcodes
 
 

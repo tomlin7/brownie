@@ -1,9 +1,7 @@
-from atexit import register
 import hypothesis.strategies as st
 import pytest
+from brownie import FLAGS, REGISTERS_HIGH, Registers
 from hypothesis import given
-
-from brownie.registers import FLAGS, REGISTERS_HIGH, Registers
 
 
 @pytest.fixture(scope="session")

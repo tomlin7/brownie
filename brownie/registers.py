@@ -1,5 +1,7 @@
-from dataclasses import dataclass
 from collections.abc import MutableMapping
+from dataclasses import dataclass
+
+__all__ = ["Registers", "FLAGS", "REGISTERS_HIGH", "REGISTERS_LOW", "REGISTERS"]
 
 REGISTERS_LOW = {
     "F": "AF",

@@ -1,52 +1,7 @@
 import json
-from dataclasses import dataclass
-from typing import Literal
 
-
-@dataclass
-class Operand:
-    immediate: bool
-    name: str
-    bytes: int = None
-    value: int = None
-    adjust: Literal["+", "-"] = None
-
-    def copy(self, value):
-        return Operand(immediate=self.immediate, name=self.name,
-            bytes=self.bytes, value=value, adjust=self.adjust)
-    
-    def print(self):
-        adjust = self.adjust or ""
-        v = (hex(self.value) if self.bytes else self.value) if self.value else self.name
-        v = v + adjust
-        
-        if self.immediate:
-            return v
-        return f"({v})"
-
-
-@dataclass
-class Instruction:
-    opcode: int
-    immediate: bool
-    operands: list[Operand]
-    cycles: list[int]
-    bytes: int
-    mnemonic: str
-    comment: str = ""
-
-    def copy(self, operands):
-        return Instruction(opcode=self.opcode, immediate=self.immediate,
-            operands=operands, cycles=self.cycles, bytes=self.bytes,
-            mnemonic=self.mnemonic, comment=self.comment)
-    
-    def print(self):
-        ops = ', '.join(op.print() for op in self.operands)
-        s = f"{self.mnemonic:<8} {ops}"
-        if self.comment:
-            s += f" ; {self.comment:<10}"
-        
-        return s
+from .instruction import Instruction
+from .operand import Operand
 
 
 def load_opcodes(opcode_file):
