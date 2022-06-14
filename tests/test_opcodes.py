@@ -1,4 +1,5 @@
-from brownie.opcodes import Instruction
+from brownie.decoder import Decoder
+from brownie.opcodes import Instruction, Operand
 import pytest
 from pathlib import Path
 
@@ -15,7 +16,7 @@ def test_decoder_nop_instruction(make_decoder):
     decoder = make_decoder(data=bytes.fromhex("00"))
     new_address, instruction = decoder.decode(0x0)
     assert new_address == 0x1
-    assert instruction = Instruction(
+    assert instruction == Instruction(
         opcode=0x0,
         immediate=True,
         operands=[],
@@ -24,3 +25,12 @@ def test_decoder_nop_instruction(make_decoder):
         mnemonic="NOP",
         comment=""
     )
+
+def test_decorder_idk():
+    dec = Decoder.create(opcode_file='brownie/etc/opcodes.json', data=Path('examples/snake.gb').read_bytes(), address=0)
+    _, instruction = dec.decode(0x201)
+    assert instruction == Instruction(opcode=224, immediate=False, operands=[
+            Operand(immediate=False, name='a8', bytes=1, value=139, adjust=None),
+            Operand(immediate=True, name='A', bytes=None, value=None, adjust=None)
+        ], cycles=[12], bytes=2, mnemonic='LDH', comment='')
+    assert instruction.print() == 'LDH      (0x8b), A'
