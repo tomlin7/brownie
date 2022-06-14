@@ -26,7 +26,7 @@ def test_decoder_nop_instruction(make_decoder):
         comment=""
     )
 
-def test_decorder_idk():
+def test_decoder_idk():
     dec = Decoder.create(opcode_file='brownie/etc/opcodes.json', data=Path('examples/snake.gb').read_bytes(), address=0)
     _, instruction = dec.decode(0x201)
     assert instruction == Instruction(opcode=224, immediate=False, operands=[
